@@ -43,6 +43,11 @@ public class UserServiceIn implements UserService {
     }
 
     @Override
+    public User getByEmailAndPassword(String email, String password) {
+        return userRepository.findByEmailAndPassword(email, password);
+    }
+
+    @Override
     public User create(User user) {
         Set<ConstraintViolation<User>> violations = validator.validate(user);
 

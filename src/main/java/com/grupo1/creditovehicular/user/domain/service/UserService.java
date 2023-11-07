@@ -12,6 +12,7 @@ public interface UserService {
     List<User> getAll();
     Page<User> getAll(Pageable pageable);
     User getByEmail(String email);
+    User getByEmailAndPassword(String email, String password);
     User create(User user);
     User update(Long userId, User user);
     User getInfoUserById(Long userId);

@@ -29,6 +29,11 @@ public class UserController {
         return mapper.modelListPage(userService.getAll(), pageable);
     }
 
+    @GetMapping("email&password/{userEmail}/{userPassword}")
+    public UserResource getInfoUserByEmailAndPassword(@PathVariable("userEmail") String userEmail, @PathVariable("userPassword") String userPassword) {
+        return mapper.toResource(userService.getByEmailAndPassword(userEmail, userPassword));
+    }
+
     @GetMapping("{userId}")
     public UserResource getInfoUserById(@PathVariable Long userId) {
         return mapper.toResource(userService.getInfoUserById(userId));
