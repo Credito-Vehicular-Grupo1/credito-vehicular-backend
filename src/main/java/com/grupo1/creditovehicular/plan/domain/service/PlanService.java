@@ -10,7 +10,9 @@ import java.util.List;
 public interface PlanService {
     List<Plan> getAll();
     Page<Plan> getAll(Pageable pageable);
-    Plan create(Plan plan);
-    Plan update(Long planId, Plan plan);
-    ResponseEntity<?> delete(Long planId);
+    Plan createForUser(Long userId, Plan plan);
+    Plan updateForUser(Long userId, Long planId, Plan plan);
+    ResponseEntity<?> deleteForUser(Long userId, Long planId);
+
+    List<Plan> getAllPlansByUserId(Long userId);
 }

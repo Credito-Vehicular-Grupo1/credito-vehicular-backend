@@ -14,6 +14,11 @@ import javax.validation.constraints.NotNull;
 public class UpdatePlanResource {
     @NotBlank
     @NotNull
+    @Column(name = "periodo_gracia")
+    private String periodoGracia;
+
+    @NotBlank
+    @NotNull
     @Column(name = "tipo_tasa")
     private String tipoTasa;
 

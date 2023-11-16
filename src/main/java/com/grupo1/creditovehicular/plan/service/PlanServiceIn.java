@@ -5,6 +5,8 @@ import com.grupo1.creditovehicular.plan.domain.persistence.PlanRepository;
 import com.grupo1.creditovehicular.plan.domain.service.PlanService;
 import com.grupo1.creditovehicular.shared.exception.ResourceNotFoundException;
 import com.grupo1.creditovehicular.shared.exception.ResourceValidationException;
+import com.grupo1.creditovehicular.user.domain.model.entity.User;
+import com.grupo1.creditovehicular.user.domain.persistence.UserRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -20,10 +22,12 @@ public class PlanServiceIn implements PlanService {
     private static final String ENTITY = "Plan";
 
     private final PlanRepository planRepository;
+    private final UserRepository userRepository;
     private final Validator validator;
 
-    public PlanServiceIn(PlanRepository planRepository, Validator validator) {
+    public PlanServiceIn(PlanRepository planRepository, UserRepository userRepository, Validator validator) {
         this.planRepository = planRepository;
+        this.userRepository = userRepository;
         this.validator = validator;
     }
 
@@ -38,8 +42,17 @@ public class PlanServiceIn implements PlanService {
     }
 
     @Override
-    public Plan create(Plan plan) {
+    public List<Plan> getAllPlansByUserId(Long userId) {
+        return planRepository.findByUserId(userId);
+    }
+
+    @Override
+    public Plan createForUser(Long userId, Plan plan) {
         Set<ConstraintViolation<Plan>> violations = validator.validate(plan);
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User", userId));
+        plan.setUser(user);
 
         if (!violations.isEmpty())
             throw new ResourceValidationException(ENTITY, violations);
@@ -48,13 +61,16 @@ public class PlanServiceIn implements PlanService {
     }
 
     @Override
-    public Plan update(Long planId, Plan request) {
+    public Plan updateForUser(Long userId, Long planId, Plan request) {
         Set<ConstraintViolation<Plan>> violations = validator.validate(request);
 
         if (!violations.isEmpty())
             throw new ResourceValidationException(ENTITY, violations);
 
-        return planRepository.findById(planId).map(plan ->
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User", userId));
+
+        return planRepository.findByIdAndUserId(planId, userId).map(plan ->
                 planRepository.save(plan.withPeriodoGracia(request.getPeriodoGracia())
                         .withTipoTasa(request.getTipoTasa())
                         .withTipoMoneda(request.getTipoMoneda())
@@ -66,8 +82,11 @@ public class PlanServiceIn implements PlanService {
     }
 
     @Override
-    public ResponseEntity<?> delete(Long planId) {
-        return planRepository.findById(planId).map(
+    public ResponseEntity<?> deleteForUser(Long userId, Long planId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("User", userId));
+
+        return planRepository.findByIdAndUserId(planId, userId).map(
                 plan -> {
                     planRepository.delete(plan);
                     return ResponseEntity.ok().build();

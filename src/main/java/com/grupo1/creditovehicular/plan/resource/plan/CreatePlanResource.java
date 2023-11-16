@@ -1,5 +1,6 @@
 package com.grupo1.creditovehicular.plan.resource.plan;
 
+import com.grupo1.creditovehicular.user.domain.model.entity.User;
 import lombok.*;
 
 import javax.persistence.Column;
@@ -12,6 +13,11 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CreatePlanResource {
+    @NotBlank
+    @NotNull
+    @Column(name = "periodo_gracia")
+    private String periodoGracia;
+
     @NotBlank
     @NotNull
     @Column(name = "tipo_tasa")
