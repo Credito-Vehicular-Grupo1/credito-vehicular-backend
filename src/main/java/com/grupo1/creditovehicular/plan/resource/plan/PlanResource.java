@@ -15,8 +15,8 @@ public class PlanResource {
     private String tipoMoneda;
     private float costoTotal;
     private float cuotaInicial;
-    private int nPeriodoGracia;
+    private int numeroPeriodoGracia;
     private double tasa;
     private double cok;
-    private int nCuotas;
+    private int periodo;
 }

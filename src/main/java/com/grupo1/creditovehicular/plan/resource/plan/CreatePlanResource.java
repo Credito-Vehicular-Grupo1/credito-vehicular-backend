@@ -37,8 +37,8 @@ public class CreatePlanResource {
     private float cuotaInicial;
 
     @NotNull
-    @Column(name = "n_periodo_gracia")
-    private int nPeriodoGracia;
+    @Column(name = "numero_periodo_gracia")
+    private int numeroPeriodoGracia;
 
     @NotNull
     private double tasa;
@@ -47,6 +47,6 @@ public class CreatePlanResource {
     private double cok;
 
     @NotNull
-    private int nCuotas;
+    private int periodo;
 
 }

@@ -43,8 +43,8 @@ public class Plan {
     private float cuotaInicial;
 
     @NotNull
-    @Column(name = "n_periodo_gracia")
-    private int nPeriodoGracia;
+    @Column(name = "numero_periodo_gracia")
+    private int numeroPeriodoGracia;
 
     @NotNull
     private double tasa;
@@ -53,7 +53,7 @@ public class Plan {
     private double cok;
 
     @NotNull
-    private int nCuotas;
+    private int periodo;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)

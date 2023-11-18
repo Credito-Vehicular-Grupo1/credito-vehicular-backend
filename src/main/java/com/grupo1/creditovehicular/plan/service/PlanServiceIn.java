@@ -76,10 +76,10 @@ public class PlanServiceIn implements PlanService {
                         .withTipoMoneda(request.getTipoMoneda())
                         .withCostoTotal(request.getCostoTotal())
                         .withCuotaInicial(request.getCuotaInicial())
-                        .withNPeriodoGracia(request.getNPeriodoGracia())
+                        .withNumeroPeriodoGracia(request.getNumeroPeriodoGracia())
                         .withTasa(request.getTasa())
                         .withCok(request.getCok())
-                        .withNCuotas(request.getNCuotas())))
+                        .withPeriodo(request.getPeriodo())))
                 .orElseThrow(() -> new ResourceNotFoundException(ENTITY, planId));
     }
 
