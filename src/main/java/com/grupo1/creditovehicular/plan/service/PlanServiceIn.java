@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service
@@ -44,6 +45,11 @@ public class PlanServiceIn implements PlanService {
     @Override
     public List<Plan> getAllPlansByUserId(Long userId) {
         return planRepository.findByUserId(userId);
+    }
+
+    @Override
+    public Optional<Plan> getPlanByUserIdAndPlanId(Long userId, Long planId) {
+        return planRepository.findByIdAndUserId(planId, userId);
     }
 
     @Override

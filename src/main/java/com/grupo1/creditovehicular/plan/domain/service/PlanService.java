@@ -6,6 +6,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface PlanService {
     List<Plan> getAll();
@@ -15,4 +16,6 @@ public interface PlanService {
     ResponseEntity<?> deleteForUser(Long userId, Long planId);
 
     List<Plan> getAllPlansByUserId(Long userId);
+
+    Optional<Plan> getPlanByUserIdAndPlanId(Long userId, Long planId);
 }

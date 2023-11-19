@@ -30,6 +30,13 @@ public class PlanController {
         return mapper.modelListPage(planService.getAllPlansByUserId(userId), pageable);
     }
 
+    @GetMapping("/{planId}")
+    public ResponseEntity<PlanResource> getPlanById(@PathVariable Long userId, @PathVariable Long planId) {
+        return planService.getPlanByUserIdAndPlanId(userId, planId)
+                .map(plan -> ResponseEntity.ok(mapper.toResource(plan)))
+                .orElse(ResponseEntity.notFound().build());
+    }
+
     // Actualiza la ruta y el método para crear un plan para un usuario específico
     @PostMapping
     public PlanResource createPlan(@PathVariable Long userId, @RequestBody CreatePlanResource resource) {
